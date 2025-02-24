@@ -5,15 +5,9 @@ import java.time.LocalTime;
 public class App {
     public static void main(String[] args) {
         LocalTime currentTime = LocalTime.now();
-        int hour = currentTime.getHour();
 
-        String greeting;
-        if (hour < 12) {
-            greeting = "Good morning, Khaleed, Welcome to COMP367, have a good day";
-        } else {
-            greeting = "Good afternoon, Khaleed, Welcome to COMP367, how is your day going?";
-        }
+        String greeting = "Welcome to COMP367";
+
         System.out.println(greeting);
     }
 }
-  

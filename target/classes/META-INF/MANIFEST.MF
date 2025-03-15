@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Built-By: khale
+Build-Jdk: 21.0.6
+Main-Class: com.example.comp367.App
+Created-By: Maven Integration for Eclipse
+

@@ -5,12 +5,14 @@ pipeline {
         DOCKER_CREDENTIALS_ID = 'docker-hub-credentials'
         DOCKER_IMAGE = 'your-dockerhub-username/maven-webapp'
         DOCKER_HUB_USERNAME = 'devbams'
+        GIT_CREDENTIALS_ID = 'GitHub-PAT' 
     }
 
     stages {
         stage('Checkout Code') {
             steps {
-                git 'https://github.com/your-username/your-repo.git'
+                // Checkout the code using GitHub credentials (PAT)
+                git credentialsId: GIT_CREDENTIALS_ID, url: 'https://github.com/khaleedcodes/devops.git'
             }
         }
 

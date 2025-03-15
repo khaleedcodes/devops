@@ -3,21 +3,22 @@ pipeline {
 
     environment {
         DOCKER_CREDENTIALS_ID = 'docker-hub-credentials'
-        DOCKER_IMAGE = 'your-dockerhub-username/maven-webapp'
+        DOCKER_IMAGE = 'devbams/maven-webapp'  // Adjust Docker image name
         DOCKER_HUB_USERNAME = 'devbams'
-        GIT_CREDENTIALS_ID = 'GitHub-PAT' 
+        GIT_CREDENTIALS_ID = 'GitHub-PAT'  // Use the correct GitHub PAT ID
     }
 
     stages {
         stage('Checkout Code') {
             steps {
-                // Checkout the code using GitHub credentials (PAT)
-                git credentialsId: GIT_CREDENTIALS_ID, url: 'https://github.com/khaleedcodes/devops.git'
+                // Checkout code using GitHub Personal Access Token
+                git credentialsId: GIT_CREDENTIALS_ID, url: 'https://github.com/khaleedcodes/devops.git', branch: 'main'
             }
         }
 
         stage('Build Maven Project') {
             steps {
+                // Run Maven clean and package
                 sh 'mvn clean package'
             }
         }
@@ -32,12 +33,14 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
+                // Build Docker image
                 sh 'docker build -t $DOCKER_IMAGE .'
             }
         }
 
         stage('Push Docker Image to Docker Hub') {
             steps {
+                // Push the Docker image to Docker Hub
                 sh 'docker push $DOCKER_IMAGE'
             }
         }

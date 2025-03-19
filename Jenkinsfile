@@ -5,7 +5,7 @@ pipeline {
         DOCKER_CREDENTIALS_ID = 'docker-hub-credentials'
         DOCKER_IMAGE = 'devbams/maven-webapp'  // Adjust Docker image name
         DOCKER_HUB_USERNAME = 'devbams'
-        GIT_CREDENTIALS_ID = 'GitHub-PAT'  // Use the correct GitHub PAT ID
+        GIT_CREDENTIALS_ID = 'GitHub-PAT' 
     }
 
     stages {
@@ -19,14 +19,14 @@ pipeline {
         stage('Build Maven Project') {
             steps {
                 // Run Maven clean and package
-                sh 'mvn clean package'
+                bat 'mvn clean package'
             }
         }
 
         stage('Login to Docker Hub') {
             steps {
                 withCredentials([usernamePassword(credentialsId: DOCKER_CREDENTIALS_ID, usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                    sh 'echo $PASSWORD | docker login -u $USERNAME --password-stdin'
+                    bat 'echo %PASSWORD% | docker login -u %USERNAME% --password-stdin'
                 }
             }
         }
@@ -34,14 +34,14 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 // Build Docker image
-                sh 'docker build -t $DOCKER_IMAGE .'
+                bat 'docker build -t %DOCKER_IMAGE% .'
             }
         }
 
         stage('Push Docker Image to Docker Hub') {
             steps {
                 // Push the Docker image to Docker Hub
-                sh 'docker push $DOCKER_IMAGE'
+                bat 'docker push %DOCKER_IMAGE%'
             }
         }
     }
